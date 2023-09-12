@@ -1,10 +1,15 @@
 name: 'Verify WASI ABI files are up-to-date'
 description: 'Verify WASI ABI files are up-to-date'
+
 inputs:
-  wit-abi-tag:
-    description: 'version of the `wit-abi` tool to use'
-    required: true
+  wit-bindgen:
+    description: 'version of the `wit-bindgen` tool to use'
+    required: false
     default: '0.11.0'
+
 runs:
-  using: 'node16'
-  main: 'main.js'
+  using: composite
+  steps:
+    - name: Install wit-bindgen
+      shell: bash
+      run: cargo install wit-bindgen@${{ inputs.wit-bindgen }}
